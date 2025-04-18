@@ -10,20 +10,32 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background-image: url("https://exams.nihs.ae/emiratiBoard/images/cmhs_pic2.jpg");
+      background-image: url("https://uaeu.com/img.png");
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
     }
+
+    .iframe-container {
+      background-color: rgba(255, 255, 255, 0.75); /* White with 75% opacity */
+      padding: 10px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    iframe {
+      width: 600px;
+      height: 250px;
+      border: none;
+    }
   </style>
 </head>
 <body>
-  <iframe 
-    src="https://free.timeanddate.com/countdown/i9ut0u0e/n2/cf100/cm0/cu4/ct3/cs0/ca0/cr0/ss1/cacf00/cpc000/pct/tc66c/fn3/fs130/szw320/szh135/tatUAEU%20CMHS%20DECISION%20DAY/tacf00/tptTime%20since%20Event%20started%20in/tpc000/mat%20%20MaBt%20DAY/macf00/mpc000/iso2025-07-25T00:00:00/bo2/pd3" 
-    allowtransparency="true" 
-    frameborder="0" 
-    width="322" 
-    height="137">
-  </iframe>
+  <div class="iframe-container">
+    <iframe 
+      src="https://free.timeanddate.com/countdown/i9ut0u0e/n2/cf100/cm0/cu4/ct3/cs0/ca0/cr0/ss1/cacf00/cpc000/pct/tc66c/fn3/fs130/szw320/szh135/tatUAEU%20CMHS%20DECISION%20DAY/tacf00/tptTime%20since%20Event%20started%20in/tpc000/mat%20%20MaBt%20DAY/macf00/mpc000/iso2025-07-25T00:00:00/bo2/pd3"
+      allowtransparency="true">
+    </iframe>
+  </div>
 </body>
 </html>
