@@ -1,41 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Countdown Timer</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Coming Soon</title>
   <style>
-    body {
+    body, html {
+      height: 100%;
       margin: 0;
-      height: 100vh;
+      font-family: Arial, sans-serif;
+      background-image: url('https://exams.nihs.ae/emiratiBoard/images/cmhs_pic2.jpg');
+      background-size: cover;
+      background-position: center;
       display: flex;
       justify-content: center;
       align-items: center;
-      background-image: url("https://uaeu.com/img.png");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
     }
 
-    .iframe-container {
-      background-color: rgba(255, 255, 255, 0.75); /* White with 75% opacity */
-      padding: 10px;
-      border-radius: 15px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    .timer-container {
+      background-color: rgba(255, 255, 255, 0.75);
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center;
     }
 
-    iframe {
-      width: 600px;
-      height: 250px;
-      border: none;
+    .timer {
+      font-size: 2em;
+      color: red;
+    }
+
+    h1 {
+      color: red;
+      margin-bottom: 20px;
     }
   </style>
 </head>
 <body>
-  <div class="iframe-container">
-    <iframe 
-      src="https://free.timeanddate.com/countdown/i9ut0u0e/n2/cf100/cm0/cu4/ct3/cs0/ca0/cr0/ss1/cacf00/cpc000/pct/tc66c/fn3/fs130/szw320/szh135/tatUAEU%20CMHS%20DECISION%20DAY/tacf00/tptTime%20since%20Event%20started%20in/tpc000/mat%20%20MaBt%20DAY/macf00/mpc000/iso2025-07-25T00:00:00/bo2/pd3"
-      allowtransparency="true">
-    </iframe>
+  <div class="timer-container">
+    <h1>Coming Soon</h1>
+    <div class="timer" id="countdown"></div>
   </div>
+
+  <script>
+    function updateCountdown() {
+      // Target date in Abu Dhabi time
+      const targetDate = new Date('2025-07-25T00:00:00+04:00');
+      const now = new Date();
+
+      // Convert current time to Abu Dhabi time (UTC+4)
+      const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+      const abuDhabiNow = new Date(utc + (4 * 3600000));
+
+      const totalSeconds = Math.floor((targetDate - abuDhabiNow) / 1000);
+
+      if (totalSeconds <= 0) {
+        document.getElementById("countdown").innerHTML = "Launched!";
+        return;
+      }
+
+      const weeks = Math.floor(totalSeconds / (7 * 24 * 3600));
+      const days = Math.floor((totalSeconds % (7 * 24 * 3600)) / (24 * 3600));
+      const hours = Math.floor((totalSeconds % (24 * 3600)) / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+
+      document.getElementById("countdown").innerHTML =
+        `${weeks}w : ${days}d : ${hours}h : ${minutes}m : ${seconds}s`;
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
 </body>
 </html>
