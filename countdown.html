@@ -13,8 +13,11 @@
       background-size: cover;
       background-position: center;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
+      padding: 40px;
+      gap: 30px;
     }
 
     .timer-container {
@@ -22,39 +25,88 @@
       padding: 40px;
       border-radius: 20px;
       text-align: center;
+      max-width: 90%;
     }
 
     .timer {
-      font-size: 2em;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
       color: red;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+
+    .time-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .time-block .number {
+      font-size: 2em;
+      font-weight: bold;
+    }
+
+    .time-block .label {
+      font-size: 1em;
+      margin-top: 5px;
+    }
+
+    .totals {
+      font-size: 1.5em;
+      color: red;
+      line-height: 1.8;
     }
 
     h1 {
       color: red;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
     }
+    
+.timer-container {
+  background-color: rgba(255, 255, 255, 0.75);
+  padding: 20px 40px; /* 👈 reduced vertical padding */
+  border-radius: 20px;
+  text-align: center;
+  width: 80%;
+  max-width: 800px; /* 👈 wider but not full width */
+}
+}
   </style>
 </head>
 <body>
+
+  <!-- FIRST TIMER -->
   <div class="timer-container">
-    <h1>Coming Soon</h1>
-    <div class="timer" id="countdown"></div>
+    <h1>UAEU CMHS DECISION DAY</h1>
+    <div class="timer" id="countdown-main-1"></div>
+    <div class="totals" id="countdown-totals-1"></div>
   </div>
 
+  <!-- SECOND TIMER -->
+  <div class="timer-container">
+    <h1>Last Day of School</h1>
+    <div class="timer" id="countdown-main-2"></div>
+    <div class="totals" id="countdown-totals-2"></div>
+  </div>
+  
+  
+
   <script>
-    function updateCountdown() {
-      // Target date in Abu Dhabi time
-      const targetDate = new Date('2025-07-25T00:00:00+04:00');
+    function updateCountdown(targetDateStr, mainId, totalsId) {
+      const targetDate = new Date(targetDateStr);
       const now = new Date();
 
-      // Convert current time to Abu Dhabi time (UTC+4)
-      const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
-      const abuDhabiNow = new Date(utc + (4 * 3600000));
+      // Convert to Abu Dhabi time (UTC+4)
+      const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+      const abuDhabiNow = new Date(utc + 4 * 3600000);
 
       const totalSeconds = Math.floor((targetDate - abuDhabiNow) / 1000);
 
       if (totalSeconds <= 0) {
-        document.getElementById("countdown").innerHTML = "Launched!";
+        document.getElementById(mainId).innerHTML = "<h2>Launched!</h2>";
+        document.getElementById(totalsId).innerHTML = "";
         return;
       }
 
@@ -64,12 +116,46 @@
       const minutes = Math.floor((totalSeconds % 3600) / 60);
       const seconds = totalSeconds % 60;
 
-      document.getElementById("countdown").innerHTML =
-        `${weeks}w : ${days}d : ${hours}h : ${minutes}m : ${seconds}s`;
+      const totalDays = Math.floor(totalSeconds / (24 * 3600));
+      const totalHours = Math.floor(totalSeconds / 3600);
+
+      document.getElementById(mainId).innerHTML = `
+        <div class="time-block">
+          <div class="number">${weeks}</div>
+          <div class="label">Weeks</div>
+        </div>
+        <div class="time-block">
+          <div class="number">${days}</div>
+          <div class="label">Days</div>
+        </div>
+        <div class="time-block">
+          <div class="number">${hours}</div>
+          <div class="label">Hours</div>
+        </div>
+        <div class="time-block">
+          <div class="number">${minutes}</div>
+          <div class="label">Minutes</div>
+        </div>
+        <div class="time-block">
+          <div class="number">${seconds}</div>
+          <div class="label">Seconds</div>
+        </div>
+      `;
+
+      document.getElementById(totalsId).innerHTML = `
+        Total Days: ${totalDays} <br/>
+        Total Hours: ${totalHours} <br/>
+        Total Seconds: ${totalSeconds}
+      `;
     }
 
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
+    function startCountdowns() {
+      updateCountdown('2025-07-25T00:00:00+04:00', 'countdown-main-1', 'countdown-totals-1');
+      updateCountdown('2025-06-19T00:00:00+04:00', 'countdown-main-2', 'countdown-totals-2');
+    }
+
+    startCountdowns();
+    setInterval(startCountdowns, 1000);
   </script>
 </body>
 </html>
